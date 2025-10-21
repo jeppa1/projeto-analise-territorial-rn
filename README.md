@@ -1,46 +1,32 @@
-# Enriquecimento de Mapa GeoJSON do RN com Territórios da Cidadania
+# Malha Municipal GeoJSON do Rio Grande do Norte (RN) com Territórios
 
-## Descrição do Projeto
+Este repositório fornece um arquivo GeoJSON otimizado contendo os polígonos dos 167 municípios do Rio Grande do Norte.
 
-Este repositório contém um script em Python (`.ipynb`) dedicado ao tratamento de um arquivo geoespacial (GeoJSON) dos 167 municípios do Rio Grande do Norte. O objetivo principal é **enriquecer o mapa adicionando a cada município sua respectiva classificação de "Território da Cidadania"**, além de corrigir e padronizar nomes de municípios.
+O diferencial deste projeto é a **atualização dos nomes** dos municípios e a **inclusão da propriedade `territorio`** (baseada nos Territórios da Cidadania/SEPLAN-RN), permitindo análises de dados e visualizações agrupadas por região.
 
-O processo utiliza um arquivo CSV mestre como "dicionário" para realizar a junção dos dados e gerar um novo arquivo GeoJSON, otimizado e pronto para ser utilizado em ferramentas de visualização de dados, SIG (Sistemas de Informação Geográfica) e outras análises.
+Este projeto é um *fork* de [Geodata BR - Brasil](https://github.com/tbrugz/geodata-br), com foco na limpeza de dados e enriquecimento para análise territorial e urbanística.
 
-## Objetivo
+## 🚀 Valor e Motivação
 
-O propósito deste projeto é fornecer um **mapa base atualizado e enriquecido do RN**, que possa servir como um recurso fundamental para análises de políticas públicas, estudos socioeconômicos e projetos de desenvolvimento regional.
+O objetivo é fornecer um arquivo de mapa (GeoJSON) "pronto para análise" (`analysis-ready`). Arquivos GeoJSON oficiais do IBGE são excelentes, mas muitas vezes precisam de tratamento:
 
-## Estrutura dos Arquivos
+1.  **Nomes Atualizados:** Os nomes dos municípios foram validados e corrigidos.
+2.  **Territórios Inclusos:** A adição da chave `territorio` permite que pesquisadores, analistas de dados e urbanistas agrupem dados quantitativos (como demografia, saúde, economia) em uma escala regional (territorial) de forma imediata, sem a necessidade de arquivos de mapeamento (DE-PARA) separados.
 
-```
-.
-├── README.md
-├── enriquecer_mapa_rn_com_territorios.ipynb
-└─── data/
-     ├── input/
-     │   ├── geojs-24-mun.json                  # Arquivo GeoJSON original
-     │   └── municipios_rn_territorio... .csv   # Arquivo mestre com o mapeamento
-     └── output/
-         └── RN_MUNICIPIOS_TERRITORIOS... .json # Arquivo GeoJSON final e enriquecido
-```
+## 💾 Esquema de Dados (Properties)
 
-* **`data/input/`**: Contém os arquivos brutos necessários para rodar o script.
-* **`data/output/`**: Contém o resultado final gerado pelo notebook.
-* **`enriquecer_mapa_rn_com_territorios.ipynb`**: Notebook Jupyter com todo o passo a passo do processo.
+Cada *Feature* (município) no arquivo `rn_mun_territorios.json` contém as seguintes `properties`:
 
-## Metodologia
+* `municipio`: (String) O nome oficial e atualizado do município.
+* `territorio`: (String) O nome do território da cidadania ao qual o município pertence (ex: "Seridó", "Mato Grande", "Potengi").
+* `cod_ibge`: (String) O código IBGE completo do município, com 7 dígitos (ex: "2400109").
 
-1.  **Carregamento:** O script utiliza a biblioteca `GeoPandas` para carregar o mapa original e `Pandas` para carregar o arquivo mestre.
-2.  **Junção (Merge):** Os dois conjuntos de dados são unidos utilizando o código IBGE do município como chave.
-3.  **Enriquecimento e Limpeza:** A propriedade "territorio" é adicionada a cada município. As colunas são renomeadas e organizadas para maior clareza.
-4.  **Otimização:** As geometrias dos polígonos são simplificadas para reduzir o tamanho do arquivo final sem perda significativa de detalhe visual.
-5.  **Exportação:** O GeoDataFrame final é salvo como um novo arquivo GeoJSON.
+## 🛠️ Como Usar (Exemplo com Python)
 
-## Como Utilizar
+Este arquivo é ideal para uso com bibliotecas como `geopandas` em Python para criar mapas temáticos e análises quantitativas.
 
-1.  Clone o repositório.
-2.  Certifique-se de ter as bibliotecas `pandas` e `geopandas` instaladas.
-3.  Execute o notebook `enriquecer_mapa_rn_com_territorios.ipynb`. O script irá gerar o arquivo final na pasta `data/output/`.
+**Exemplo: Criar um mapa de dados agregados por Território**
 
----
-**Autor:** Jadson Chagas
+Você precisará das bibliotecas `geopandas` e `pandas`.
+```bash
+pip install geopandas pandas matplotlib
